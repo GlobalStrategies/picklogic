@@ -131,13 +131,13 @@ class Pickable {
     // [{ sufficientToPick: [x AND y AND z] } OR { sufficientToPick: [a AND b] }]
     pickCriteria: Array<PickCriteria>
     defaultKey: ?string
-    lowerRanked: boolean
+    isSolePickable: boolean
 
-    constructor(pickable: PickableObject, defaultKey?: ?string, lowerRanked?: boolean) {
+    constructor(pickable: PickableObject, defaultKey?: ?string, isSolePickable?: boolean) {
         // a default key can be passed in separately, to avoid redundancy in conditions
         this.pickCriteria = pickable.pickCriteria;
         this.defaultKey = defaultKey || null;
-        this.lowerRanked = lowerRanked || false;
+        this.isSolePickable = (isSolePickable === false) ? false : true; // unless explicitly false, assume true
     }
     doDataSatisfyCriteria(data: EvaluableData): boolean {
         if (!this.pickCriteria || this.pickCriteria.length === 0) {
@@ -160,8 +160,8 @@ class Pickable {
         // [ { conjunction: 'IF', conditionString: 'city = NEW YORK & state = NY' }, 
         // { conjunction: 'OR', conditionString: 'city = SAN FRANCISCO & state = CA' } ]
         if (!this.pickCriteria || this.pickCriteria.length === 0) {
-            readouts = this.lowerRanked ? [[ { conjunction: localized(IF), conditionString: localized(NOT_PREV_DIVERTED) } ]] :
-                [[ { conjunction: localized(ALWAYS), conditionString: '' } ]];
+            readouts = this.isSolePickable ? [[ { conjunction: localized(ALWAYS), conditionString: '' } ]] :
+                [[ { conjunction: localized(IF), conditionString: localized(NOT_PREV_DIVERTED) } ]];
         } else {
             readouts = this.pickCriteria.map((stp: PickCriteria, i: number) => {
                 const andConditions = stp.sufficientToPick.map((rawCond, j: number) => {

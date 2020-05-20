@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "A JS engine to pick among JSON objects based on simple logic conditions",
   "main": "lib/index.js",
-  "files": [ 
-      "lib/index.js"
-  ],
   "repository": "git@github.com:GlobalStrategies/picklogic.git",
   "author": "Elon Danziger <elon.danziger@globalstrategies.org>",
   "license": "Apache-2.0",

@@ -647,7 +647,7 @@ describe('Logic is output correctly', () => {
     describe('Pick criteria are output correctly', () => {
         test('No criteria (always) output', () => {
             const pickable = new PickLogic.Pickable({ pickCriteria: [] });
-            expect(pickable.readoutsForPickableWithLocalized(null)).toEqual(expect.arrayContaining([{ conjunction: 'ALWAYS', conditionString: '' }]));
+            expect(pickable.readoutsForPickableWithLocalized()).toEqual(expect.arrayContaining([{ conjunction: 'ALWAYS', conditionString: '' }]));
         });
         test('Single sufficientToPick output', () => {
             const pickable = new PickLogic.Pickable({ pickCriteria: [{
@@ -662,7 +662,7 @@ describe('Logic is output correctly', () => {
                     }
                 ]
             }] });
-            expect(pickable.readoutsForPickableWithLocalized(null)).toEqual(expect.arrayContaining([{ conjunction: 'IF', conditionString: 'Luke = SKYWALKER & Lando = CALRISSIAN' }]));
+            expect(pickable.readoutsForPickableWithLocalized()).toEqual(expect.arrayContaining([{ conjunction: 'IF', conditionString: 'Luke = SKYWALKER & Lando = CALRISSIAN' }]));
         });
         test('Double sufficientToPick output', () => {
             const pickable = new PickLogic.Pickable({ pickCriteria: [{
@@ -688,7 +688,7 @@ describe('Logic is output correctly', () => {
                 { conjunction: 'OR', conditionString: 'Leia = ORGANA' }]));
         });
         test('If not otherwise diverted output', () => {
-            const pickable = new PickLogic.Pickable({ pickCriteria: [] }, null, true);
+            const pickable = new PickLogic.Pickable({ pickCriteria: [] }, null, false);
             expect(pickable.readoutsForPickableWithLocalized(null)).toEqual(expect.arrayContaining([{ conjunction: 'IF', conditionString: 'not previously diverted' }]));
         });
         test('Rewrite inclusion (equipment) output', () => {
