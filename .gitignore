@@ -1,0 +1,10 @@
+# dependencies
+/node_modules
+
+# built
+lib
+dist
+
+# other
+/.vscode
+.DS_Store
