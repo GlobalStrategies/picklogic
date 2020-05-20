@@ -1,7 +1,11 @@
 <h1 align="center">PickLogic</h1>
 
-<p>
+<p align="center">
 <b>A format for bundling JSON objects with selection conditions — and an engine to do the selecting</b>
+<br>
+</p>
+<p align="center">
+Created by [Global Strategies](https://www.globalstrategies.org) for [NoviGuide](https://www.noviguide.com)
 <br>
 </p>
 
