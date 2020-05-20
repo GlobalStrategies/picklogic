@@ -5,7 +5,7 @@
 <br>
 </p>
 <p align="center">
-Created by [Global Strategies](https://www.globalstrategies.org) for [NoviGuide](https://www.noviguide.com)
+    Created by <a href='https://www.globalstrategies.org'>Global Strategies</a> for <a href='https://www.noviguide.com'>NoviGuide</a>
 <br>
 </p>
 
