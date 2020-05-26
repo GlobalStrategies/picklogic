@@ -13,8 +13,7 @@
     "build:umd:min": "cross-env NODE_ENV=production npm run build:umd",
     "clean": "rimraf lib dist",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min",
-    "test": "jest src/",
-    "demo": "rimraf lib && npm run build:commonjs && node ./lib/demo.js"
+    "test": "jest src/"
   },
   "jest": {
     "transform": {
@@ -30,7 +29,6 @@
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
-    "enquirer": "^2.3.5",
     "eslint-plugin-react": "^7.20.0",
     "flow-bin": "^0.125.1",
     "rimraf": "^3.0.2",
