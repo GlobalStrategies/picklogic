@@ -21,7 +21,7 @@ $ yarn add picklogic
 ```
 
 ## ❯ Demo
-Clone the PickLogic Demo repo, install dependencies, and run:
+Clone the [PickLogic Demo repo](https://github.com/GlobalStrategies/picklogic-demo), install dependencies, and run:
 
 ```sh
 $ git clone git@github.com:GlobalStrategies/picklogic-demo.git
@@ -104,7 +104,7 @@ The `Pickable` class constructor function is a convenience for making this JSON 
 `const pickable = new Pickable(FEVER_PICKABLE, null, true)`
 
 ### readoutsForPickableWithLocalized()
-Outputs a simplified string version of the conditions, optionally localizing fixed words like IF and AND. This can be used to help non-engineers validate the conditional logic.
+Outputs an object containing simplified string versions of the conditions, optionally localizing fixed words like IF and AND. This can be used to help non-engineers validate the conditional logic.
 
 **Params**
 
