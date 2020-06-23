@@ -1,13 +1,34 @@
 <h1 align="center">PickLogic</h1>
 
 <p align="center">
-<b>A format for bundling JSON objects with selection conditions — and an engine to do the selecting</b>
+    <b>A format for bundling JSON objects with selection conditions</br>An engine to do the selecting</b>
 <br>
 </p>
 <p align="center">
     Created by <a href='https://www.globalstrategies.org'>Global Strategies</a> for <a href='https://www.noviguide.com'>NoviGuide</a>
 <br>
 </p>
+
+## ❯ Quick Start
+Install with [npm](https://www.npmjs.com/):
+
+```sh
+$ npm install picklogic
+```
+Install with [yarn](https://yarnpkg.com/en/):
+```sh
+$ yarn add picklogic
+```
+
+## ❯ Demo
+Clone the PickLogic Demo repo, install dependencies, and run:
+
+```sh
+$ git clone git@github.com:GlobalStrategies/picklogic-demo.git
+$ yarn
+$ yarn demo
+```
+<img src="https://i.imgur.com/sIJW28X.png" alt="Preview of PickLogic Demo" width="500"/>
 
 ## ❯ Concept
 Suppose you have two objects that you need to choose between:
@@ -68,35 +89,13 @@ Finally we rewrite **conditions** in this form:
     ]
 
 ## ❯ API
-### Picker
-Create an instance of the PickLogic `Picker`.
-
-**Params**
-
-* `pickables` **{Array}**: The JSON objects to select among, each of the form `{ "id": {string}, "pickCriteria": {Array}, "payload": {Object} }`. You can optionally include a `"logicRank": {number}` property to evaluate the conditions on each object in a specific order.
-* `defaultKey` **{string}**: (optional) If all conditions perform logic on the same key, this property can be passed in and the `"dataKey"` property can be left out of all conditions.
-
-**Example**
-
-`const picker = new Picker(jsonFile.pickables, 'temperature')`
-
-### pickForData()
-Given the passed data, get a matching JSON object, if any.
-
-**Params**
-
-* `data` **{Object}**: The data object should be a hash in the form `{ [dataKey]: { "value": {string | number | boolean | Array}, "datatype": {string} }`.
-
-**Example**
-
-`const pick = picker.pickForData({ system: { value: 'FAHRENHEIT', datatype: 'string' }, temperature: { value: 101, datatype: 'number' } })`
-
 ### Pickable
-Create a `Pickable` instance.
+A pickable is a JSON object that includes an `id`, the `pickCriteria` under which it should be selected, and the `payload` it should deliver if selected.
+The `Pickable` class constructor function is a convenience for making this JSON format human-readable.
 
 **Params**
 
-* `pickable` **{Object}**: A pickable JSON objects in the form `{ "id": {string}, "pickCriteria": {Array}, "payload": {Object} }`
+* `pickable` **{Object}**: A pickable JSON object of the form `{ "id": {string}, "pickCriteria": {Array}, "payload": {Object} }`
 * `defaultKey` **{string}**: (optional). If all conditions perform logic on the same key, this property can be passed in and the `"dataKey"` property can be left out of all conditions.
 * `solePickable` **{boolean}**: (optional). Important only for condition readouts; determines whether an "always pick" condition is rendered as `ALWAYS` or `IF not otherwise diverted`. If a `pickCriteria: []` pickable is not the only pickable in a set (`solePickable = false`), it must be a final "catch-all" so its conditionality is output as `IF not otherwise diverted`. If `solePickable = true`, the conditionality is simply output as `ALWAYS`.
 
@@ -105,7 +104,7 @@ Create a `Pickable` instance.
 `const pickable = new Pickable(FEVER_PICKABLE, null, true)`
 
 ### readoutsForPickableWithLocalized()
-Outputs a simplified string version of the conditions, optionally localizing fixed words. This can be used to validate the actual conditional logic with non-engineers.
+Outputs a simplified string version of the conditions, optionally localizing fixed words like IF and AND. This can be used to help non-engineers validate the conditional logic.
 
 **Params**
 
@@ -124,22 +123,27 @@ Outputs a simplified string version of the conditions, optionally localizing fix
       conjunction: 'OR',
       conditionString: 'system = C & temperature > 37.8'
     }]
-This can be easily converted to a simple text format.
-## ❯ Quick Start
-Install with [npm](https://www.npmjs.com/):
+This can be easily converted to a simple text format, as seen in the demo.
+<br /><br />
+### Picker
+The Picker class digests passed JSON conditions (`pickables`) and can evaluate them against passed `data` hashes.
 
-```sh
-$ npm install picklogic
-```
-Install with [yarn](https://yarnpkg.com/en/):
+**Params**
 
-```sh
-$ yarn add picklogic
-```
-For a simple demo:
-```sh
-$ cd node_modules/picklogic && npm run demo 
-```
-```sh
-$ cd node_modules/picklogic && yarn demo 
-```
+* `pickables` **{Array}**: The JSON `pickables` to select among, each of the form `{ "id": {string}, "pickCriteria": {Array}, "payload": {Object} }`. You can optionally include a `"logicRank": {number}` property to evaluate the conditions on each object in a specific order.
+* `defaultKey` **{string}**: (optional) If all conditions perform logic on the same key, this property can be passed in and the `"dataKey"` property can be left out of all conditions.
+
+**Example**
+
+`const picker = new Picker(jsonFile.pickables, 'temperature')`
+
+### pickForData()
+Given the passed data, get a matching JSON object, if any.
+
+**Params**
+
+* `data` **{Object}**: The data object should be a hash in the form `{ [dataKey]: { "value": {string | number | boolean | Array}, "datatype": {string} }`.
+
+**Example**
+
+`const pick = picker.pickForData({ system: { value: 'FAHRENHEIT', datatype: 'string' }, temperature: { value: 101, datatype: 'number' } })`
