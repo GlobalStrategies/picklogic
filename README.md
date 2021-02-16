@@ -97,7 +97,7 @@ The `Pickable` class constructor function is a convenience for making this JSON 
 
 * `pickable` **{Object}**: A pickable JSON object of the form `{ "id": {string}, "pickCriteria": {Array}, "payload": {Object} }`
 * `defaultKey` **{string}**: (optional). If all conditions perform logic on the same key, this property can be passed in and the `"dataKey"` property can be left out of all conditions.
-* `solePickable` **{boolean}**: (optional). Important only for condition readouts; determines whether an "always pick" condition is rendered as `ALWAYS` or `IF not otherwise diverted`. If a `pickCriteria: []` pickable is not the only pickable in a set (`solePickable = false`), it must be a final "catch-all" so its conditionality is output as `IF not otherwise diverted`. If `solePickable = true`, the conditionality is simply output as `ALWAYS`.
+* `lowerRanked` **{boolean}**: (optional). Important only for condition readouts; determines whether an "always pick" condition is rendered as `ALWAYS` or `IF not otherwise diverted`. If an "always pick" condition (`pickCriteria: []`) is the only pickable in a set (`lowerRanked = false`), the conditionality is simply output as `ALWAYS`. Otherwise, it must be a final "catch-all" (`lowerRanked = true`), so the conditionality is output as `IF not otherwise diverted`.
 
 **Example**
 

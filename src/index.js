@@ -131,13 +131,13 @@ class Pickable {
     // [{ sufficientToPick: [x AND y AND z] } OR { sufficientToPick: [a AND b] }]
     pickCriteria: Array<PickCriteria>
     defaultKey: ?string
-    isSolePickable: boolean
+    lowerRanked: boolean
 
-    constructor(pickable: PickableObject, defaultKey?: ?string, isSolePickable?: boolean) {
+    constructor(pickable: PickableObject, defaultKey?: ?string, lowerRanked?: boolean) {
         // a default key can be passed in separately, to avoid redundancy in conditions
         this.pickCriteria = pickable.pickCriteria;
         this.defaultKey = defaultKey || null;
-        this.isSolePickable = (isSolePickable === false) ? false : true; // unless explicitly false, assume true
+        this.lowerRanked = lowerRanked || false;
     }
     doDataSatisfyCriteria(data: EvaluableData): boolean {
         if (!this.pickCriteria || this.pickCriteria.length === 0) {
@@ -156,12 +156,12 @@ class Pickable {
     readoutsForPickableWithLocalized(localizedFn: ?(message: string) => string): Array<ConditionReadout> {
         const localized = localizedFn || defaultLocalized;
         let readouts;
-        // outputs array of the form
+        // array of the form
         // [ { conjunction: 'IF', conditionString: 'city = NEW YORK & state = NY' }, 
         // { conjunction: 'OR', conditionString: 'city = SAN FRANCISCO & state = CA' } ]
         if (!this.pickCriteria || this.pickCriteria.length === 0) {
-            readouts = this.isSolePickable ? [[ { conjunction: localized(ALWAYS), conditionString: '' } ]] :
-                [[ { conjunction: localized(IF), conditionString: localized(NOT_PREV_DIVERTED) } ]];
+            readouts = this.lowerRanked ? [[ { conjunction: localized(IF), conditionString: localized(NOT_PREV_DIVERTED) } ]] :
+                [[ { conjunction: localized(ALWAYS), conditionString: '' } ]];
         } else {
             readouts = this.pickCriteria.map((stp: PickCriteria, i: number) => {
                 const andConditions = stp.sufficientToPick.map((rawCond, j: number) => {
@@ -192,7 +192,7 @@ class Condition {
         this.operator = operator || '=';
         this.referenceValue = referenceValue;
     }
-    isTrueForData(data: EvaluableData) {
+    isTrueForData(data: EvaluableData): boolean {
         const { dataKey } = this;
         if (dataKey) {
             let dataValue;
@@ -254,7 +254,7 @@ class Condition {
                     return (operator === '~') ? `|*${includedValue}|` :
                         `|*${localized(NO)} ${includedValue}|`;
                 } else if (REWRITE_COMPOUND_STRINGS) {
-                    // optional simplication of compound strings, e.g. rewrite gender.MALE as MALE
+                    // optional simplication of compound strings, e.g. gender.MALE
                     stringValue = this.rewriteCompoundString(referenceValue);
                 } else {
                     stringValue = referenceValue.toUpperCase();
