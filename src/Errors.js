@@ -25,11 +25,12 @@
 
 export class UnevaluableError extends Error {
     dependency: string
-    message: string
 
-    constructor(dependency: string, message?: string) {
+    constructor(dependency: string, message?: string, fileName?: string, lineNumber?: number) {
       super();
       this.dependency = dependency;
       this.message = message || '';
+      this.fileName = fileName;
+      this.lineNumber = lineNumber;
   }
 }  
