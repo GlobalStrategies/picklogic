@@ -1,6 +1,6 @@
 {
   "name": "picklogic",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A JS engine to pick among JSON objects based on simple logic conditions",
   "main": "lib/index.js",
   "repository": "git@github.com:GlobalStrategies/picklogic.git",
